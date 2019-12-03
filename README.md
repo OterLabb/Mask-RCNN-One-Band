@@ -10,7 +10,6 @@ changed to:
 
     shape=[None, None, 1], name="input_image")
 
-
     "heads": r"(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)", 
 
 changed to:
