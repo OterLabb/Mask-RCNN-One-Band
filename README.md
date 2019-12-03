@@ -1,5 +1,63 @@
 # Mask R-CNN for Object Detection and Segmentation
 
+Files that I changed to make Mask R-CNN work with only one channel:
+model.py
+shape=[None, None, 3], name="input_image") changed to:
+shape=[None, None, 1], name="input_image")
+
+"heads": r"(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)", changed to:
+"heads": r"(conv1\_.*)|(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)",
+
+utils.py
+    def load_image(self, image_id):
+        """Load the specified image and return a [H,W,3] Numpy array.
+        """
+        # Load image
+        image = skimage.io.imread(self.image_info[image_id]['path'])
+        # If grayscale. Convert to RGB for consistency.
+        if image.ndim != 3:
+            image = skimage.color.gray2rgb(image)
+        # If has an alpha channel, remove it for consistency
+        if image.shape[-1] == 4:
+            image = image[..., :3]
+        return image
+        
+changed to:
+
+    def load_image(self, image_id):
+        # Load image
+        image = skimage.io.imread(self.image_info[image_id]['path'])
+        #image = cv2.imread(self.image_info[image_id]['path'])
+        # Convert to grayscale for consistency.
+        #print(image.ndim)
+        #if image.ndim != 1:
+        #    image = skimage.color.rgb2gray(image)
+
+        # Extending the size of the image to be (h,w,1)
+        image = image[..., np.newaxis]
+        return image
+        
+padding = [(top_pad, bottom_pad), (left_pad, right_pad), (0, 0)] changed to:
+padding = [(top_pad, bottom_pad)]
+
+visualize.py
+
+plt.imshow(image.astype(np.uint8), cmap=cmap, changed to:
+plt.imshow(np.squeeze(image), cmap=cmap,
+
+def apply_mask(image, mask, color, alpha=0.5):
+    """Apply the given mask to the image.
+    """
+    for c in range(3):
+    
+changed to:
+
+def apply_mask(image, mask, color, alpha=0.5):
+    """Apply the given mask to the image.
+    """
+    for c in range(0):
+
+
 This is an implementation of [Mask R-CNN](https://arxiv.org/abs/1703.06870) on Python 3, Keras, and TensorFlow. The model generates bounding boxes and segmentation masks for each instance of an object in the image. It's based on Feature Pyramid Network (FPN) and a ResNet101 backbone.
 
 ![Instance Segmentation Sample](assets/street.png)
