@@ -8,7 +8,8 @@ shape=[None, None, 1], name="input_image")
 "heads": r"(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)", changed to:
 "heads": r"(conv1\_.*)|(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)",
 
-utils.py
+### utils.py
+
     def load_image(self, image_id):
         """Load the specified image and return a [H,W,3] Numpy array.
         """
@@ -40,7 +41,7 @@ changed to:
 padding = [(top_pad, bottom_pad), (left_pad, right_pad), (0, 0)] changed to:
 padding = [(top_pad, bottom_pad)]
 
-visualize.py
+### visualize.py
 
 plt.imshow(image.astype(np.uint8), cmap=cmap, changed to:
 plt.imshow(np.squeeze(image), cmap=cmap,
