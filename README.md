@@ -10,6 +10,7 @@ changed to:
 
 shape=[None, None, 1], name="input_image")
 
+
 "heads": r"(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)", 
 
 changed to:
@@ -46,7 +47,10 @@ changed to:
         image = image[..., np.newaxis]
         return image
         
-padding = [(top_pad, bottom_pad), (left_pad, right_pad), (0, 0)] changed to:
+padding = [(top_pad, bottom_pad), (left_pad, right_pad), (0, 0)] 
+
+changed to:
+
 padding = [(top_pad, bottom_pad)]
 
 ### visualize.py
