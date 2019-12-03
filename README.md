@@ -4,10 +4,16 @@ Files that I changed to make Mask R-CNN work with only one channel:
 
 ### model.py
 
-shape=[None, None, 3], name="input_image") changed to:
+shape=[None, None, 3], name="input_image")
+
+changed to:
+
 shape=[None, None, 1], name="input_image")
 
-"heads": r"(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)", changed to:
+"heads": r"(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)", 
+
+changed to:
+
 "heads": r"(conv1\_.*)|(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)",
 
 ### utils.py
