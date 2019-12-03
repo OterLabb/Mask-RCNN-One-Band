@@ -4,18 +4,18 @@ Files that I changed to make Mask R-CNN work with only one channel:
 
 ### model.py
 
-shape=[None, None, 3], name="input_image")
+    shape=[None, None, 3], name="input_image")
 
 changed to:
 
-shape=[None, None, 1], name="input_image")
+    shape=[None, None, 1], name="input_image")
 
 
-"heads": r"(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)", 
+    "heads": r"(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)", 
 
 changed to:
 
-"heads": r"(conv1\_.*)|(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)",
+    "heads": r"(conv1\_.*)|(mrcnn\_.*)|(rpn\_.*)|(fpn\_.*)",
 
 ### utils.py
 
@@ -47,16 +47,18 @@ changed to:
         image = image[..., np.newaxis]
         return image
         
-padding = [(top_pad, bottom_pad), (left_pad, right_pad), (0, 0)] 
+    padding = [(top_pad, bottom_pad), (left_pad, right_pad), (0, 0)] 
 
 changed to:
 
-padding = [(top_pad, bottom_pad)]
+    padding = [(top_pad, bottom_pad)]
 
 ### visualize.py
 
     plt.imshow(image.astype(np.uint8), cmap=cmap, 
+
 changed to:
+
     plt.imshow(np.squeeze(image), cmap=cmap,
 
     def apply_mask(image, mask, color, alpha=0.5):
