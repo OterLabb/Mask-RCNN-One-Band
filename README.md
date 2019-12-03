@@ -1,7 +1,9 @@
 # Mask R-CNN for Object Detection and Segmentation
 
 Files that I changed to make Mask R-CNN work with only one channel:
-model.py
+
+### model.py
+
 shape=[None, None, 3], name="input_image") changed to:
 shape=[None, None, 1], name="input_image")
 
